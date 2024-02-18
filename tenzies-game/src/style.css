@@ -24,10 +24,24 @@ main{
   display: grid;
   place-items: center;
   background-image: linear-gradient(45deg,
-  rgba(70, 70, 70, 0.2),
-  rgba(100, 100, 100, 0.2)), url(./assets/Tenzies_logo2.png);
-  background-blend-mode: overlay;
+  rgba(255, 255, 255, 0.75),
+  rgba(255, 255, 255, 0.95)), url(./assets/Tenzies_logo-removebg-preview.png);
   background-position: center;
+  background-size: contain;
+}
+
+.title{
+  color: #2B283A;
+  font-weight: 800;
+}
+
+.instructions{
+  max-width: 80%;
+  text-align: center;
+  color: #4A4E74;
+  font-size: .9em;
+  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  font-family: "Karla", sans-serif;
 }
 
 .die-container{
@@ -48,6 +62,9 @@ main{
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   /* border: 1px solid red; */
+}
+.is-held{
+  background-color: #59E391;
 }
 .die:active{
   transform: scale(.98);
