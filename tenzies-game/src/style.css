@@ -13,7 +13,6 @@ main{
 .outer-box{
   background: #0B2434;
   margin: auto;
-
 }
 .inner-box{
   height: clamp(10em, 20em, 21em);
@@ -71,7 +70,7 @@ main{
 }
 .roll-btn{
   background-color: #5035ff;
-  padding: .8em 2.2em;
+  padding: .7rem 2.2em;
   border: none;
   border-radius: 4px;
   color: #fff;

@@ -4,14 +4,14 @@ import Die from './Die'
 import 'nanoid'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
-// import {useWindowSize} from '@uidotdev/usehooksdotdev/usehooks'
+import {useWindowSize} from 'react-use'
 
 function App() {
   const [diceArr, setDiceArr] = useState(allNewDice)
   const [tenzies, setTenzies] = useState(false)
-  // const { width, height } = useWindowSize()
-  const width  = window.innerWidth
-  const height = window.innerHeight
+  const { width, height } = useWindowSize()
+  // const width  = window.innerWidth
+  // const height = window.innerHeight
 
   function newDie(){
     const randomNumber = Math.floor((Math.random() * 6) + 1)
