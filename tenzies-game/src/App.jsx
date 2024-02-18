@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './style.css'
 import Die from './Die'
+import CountUpTimer from './components/Counter'
 import 'nanoid'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
@@ -9,9 +10,10 @@ import {useWindowSize} from 'react-use'
 function App() {
   const [diceArr, setDiceArr] = useState(allNewDice)
   const [tenzies, setTenzies] = useState(false)
+  const [seconds, setSeconds] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
   const { width, height } = useWindowSize()
-  // const width  = window.innerWidth
-  // const height = window.innerHeight
+  const [rollCount, setRollCount] = useState(0)
 
   function newDie(){
     const randomNumber = Math.floor((Math.random() * 6) + 1)
@@ -26,6 +28,8 @@ function App() {
   }
 
   function allNewDice(){
+    resetTimer()
+
     const numberArr = []
     
     for (let i = 0; i < 10; i++){
@@ -36,9 +40,17 @@ function App() {
   }
 
   function rollDice(){
-    setDiceArr(prev => prev.map(die => (
-      die.isHeld ? die : newDie()
-    )))
+    if(!tenzies){
+      setDiceArr(prev => prev.map(die => (
+        die.isHeld ? die : newDie()
+      )))
+      setRollCount(prevRollCount => prevRollCount + 1)
+    }
+    else{
+      setTenzies(false)
+      setDiceArr(allNewDice)
+      setRollCount(0)
+    }
   }
 
   function holdDice(id){
@@ -47,26 +59,36 @@ function App() {
     )))
   }
 
-  // function renderDice(){
-  //   return tenzies ? allNewDice() : rollDice()
-  // }
+  function startTimer(){
+      setIsRunning(true);
+  };
 
-useEffect(() => {
+  function pauseTimer(){
+      setIsRunning(false);
+  };
 
-  const allHeld = diceArr.every(element => element.isHeld);
-  const firstValue = diceArr[0].value;
-  const allSame = diceArr.every(element => element.value === firstValue);
+  function resetTimer(){
+      setIsRunning(false);
+      setSeconds(0);
+  };
 
-  if(allHeld && allSame){
-    setTenzies(true)
-  }
-  else{
-    setTenzies(false)
-  }
+  useEffect(() => {
+    const allHeld = diceArr.every(element => element.isHeld);
+    const firstValue = diceArr[0].value;
+    const allSame = diceArr.every(element => element.value === firstValue);
 
-  console.log(tenzies)
+    if(allHeld && allSame){
+      setTenzies(true)
+      pauseTimer()
+    }
+    else{
+      setTenzies(false)
+      startTimer()
+    }
 
-}, [diceArr])
+    console.log(tenzies)
+
+  }, [diceArr])
 
   return (
     <main>
@@ -79,8 +101,22 @@ useEffect(() => {
       }
       <div className="outer-box">
         <div className="inner-box">
-            <h1 className="title">Tenzies</h1>
-            <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+          <h1 className="title">Tenzies</h1>
+          <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+          <div className="stats">
+            <p className="roll-count">
+              No. of Rolls: {rollCount}
+            </p>
+            <p className="highscore-count">
+              Highscore: {}
+            </p>
+            <CountUpTimer 
+              isRunning={isRunning} 
+              setIsRunning={setIsRunning}
+              seconds={seconds}
+              setSeconds={setSeconds}
+            />
+          </div>
           <div className="die-container">
             {
               diceArr.map(die => 
@@ -90,7 +126,7 @@ useEffect(() => {
           </div>
           <button 
             className='roll-btn' 
-            onClick={() => tenzies ? allNewDice() : rollDice()}
+            onClick={() => rollDice()}
           >
               {tenzies ? "New Game" : "Roll" }
           </button>
