@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import './style.css'
 import Die from './Die'
 import CountUpTimer from './components/Counter'
-import 'nanoid'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
@@ -104,16 +103,10 @@ function App() {
   };
 
   useEffect(() => {
-    if(isStopped){
-      setBestTime(
-        currentTime ? currentTime : bestTime
-      )
-      if (currentTime && currentTime < bestTime) {
-        setBestTime(currentTime)
-      }
+    if (isStopped && (!bestTime || currentTime < bestTime)) {
+      setBestTime(currentTime);
     }
-
-  }, [isStopped])
+}, [isStopped, currentTime, bestTime]);
 
   useEffect(() => {
     if (allHeld && allSame) {
