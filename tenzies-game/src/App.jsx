@@ -14,6 +14,7 @@ function App() {
   const [bestTime, setBestTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [isRunning, setIsRunning] = useState(false);
+  const [isStopped, setStopped] = useState(false)
   const { width, height } = useWindowSize()
   const [rollCount, setRollCount] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -86,29 +87,38 @@ function App() {
     setIsRunning(true);
   };
 
-  function pauseTimer() {
-    setIsRunning(false);
+  function toggleTimer() {
+    setIsRunning(preRunning => !preRunning);
+    setIsPaused(prevPaused => !prevPaused)
   };
+
+  function stopTimer(){
+    setIsRunning(false)
+    setStopped(true)
+  }
 
   function resetTimer() {
     setIsRunning(false);
     setSeconds(0);
+    setStopped(false)
   };
 
   useEffect(() => {
-    setBestTime(
-      currentTime ? currentTime : bestTime
-    )
-    if (currentTime && currentTime < bestTime) {
-      setBestTime(currentTime)
+    if(isStopped){
+      setBestTime(
+        currentTime ? currentTime : bestTime
+      )
+      if (currentTime && currentTime < bestTime) {
+        setBestTime(currentTime)
+      }
     }
 
-  }, [isRunning])
+  }, [isStopped])
 
   useEffect(() => {
     if (allHeld && allSame) {
       setTenzies(true)
-      pauseTimer()
+      stopTimer()
       setCurrentTime(seconds)
     }
     else {
@@ -178,7 +188,7 @@ function App() {
         <div className="controls">
           <button
             className='pause'
-            onClick={() => setIsPaused(prevPaused => !prevPaused)}
+            onClick={() => toggleTimer()}
           >
             {isPaused ? "resume" : "pause"}
           </button>
