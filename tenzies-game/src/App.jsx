@@ -11,7 +11,7 @@ function App() {
   const [diceArr, setDiceArr] = useState(allNewDice)
   const [tenzies, setTenzies] = useState(false)
   const [seconds, setSeconds] = useState(0);
-  const [bestTime, setBestTime] = useState(0)
+  const [bestTime, setBestTime] = useState(JSON.parse(localStorage.getItem("bestTime")) || 0)
   const [currentTime, setCurrentTime] = useState(0)
   const [isRunning, setIsRunning] = useState(false);
   const { width, height } = useWindowSize()
@@ -99,8 +99,10 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(bestTime)
-  }, [isRunning])
+    if(allHeld && allSame){
+      localStorage.setItem("bestTime", JSON.stringify(bestTime))
+    }
+  }, [bestTime])
 
   useEffect(() => {
     if (allHeld && allSame) {
