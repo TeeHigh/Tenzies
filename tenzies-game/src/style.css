@@ -84,11 +84,38 @@ main{
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   margin: 1em 0 .7em;
 }
-.grey{
-  background-color: #a9abaa;
-}
 .roll-btn:active{
   transform: scale(.98);
+}
+
+.controls{
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.toggle-timer, .restart{
+  display: flex;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.toggle-timer:active, .restart:active{
+  transform: scale(.95);
+}
+
+.bottom-btn{
+  width: 2.5em;
+  height: 2.5em;
+  place-self: center;
+  color: #000;
+}
+
+.restart-btn{
+  color: #40885d;
 }
 @media(min-width: 750px){
   .inner-box{

@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import './style.css'
 import Die from './Die'
 import CountUpTimer from './components/Timer'
-import 'nanoid'
-import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
+import { nanoid } from 'nanoid'
 import { useWindowSize } from 'react-use'
+import { FaRegPlayCircle, FaRegPauseCircle } from "react-icons/fa";
+import { VscDebugRestart } from "react-icons/vsc";
 
 function App() {
   const [diceArr, setDiceArr] = useState(allNewDice)
@@ -56,7 +57,6 @@ function App() {
     setDiceArr(allNewDice)
     resetTimer()
     setRollCount(0)
-    // setIsRunning(true)
     setIsPaused(false)
   }
 
@@ -85,8 +85,10 @@ function App() {
   }
 
   function toggleTimer() {
-    setIsRunning(prevRunning => !prevRunning);
-    setIsPaused(prevPaused => !prevPaused)
+    if(rollCount){
+      setIsRunning(prevRunning => !prevRunning);
+      setIsPaused(prevPaused => !prevPaused)
+    }
   };
 
   function stopTimer(){
@@ -181,10 +183,18 @@ function App() {
         </button>
         <div className="controls">
           <button
-            className='pause'
+            className='toggle-timer'
             onClick={() => toggleTimer()}
           >
-            {isPaused ? "resume" : "pause"}
+            {!isRunning ? 
+              <FaRegPlayCircle
+                className='pause-btn bottom-btn'
+              /> 
+              : 
+              <FaRegPauseCircle
+                className='play-btn bottom-btn'
+              /> 
+            }
           </button>
           <button
             className='restart'
@@ -192,7 +202,9 @@ function App() {
               () => resetGame()
             }
           >
-            restart
+            <VscDebugRestart
+              className='restart-btn bottom-btn'
+            />
           </button>
         </div>
       </div>
