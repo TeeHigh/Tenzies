@@ -110,9 +110,14 @@ main{
   width: 2.5em;
   height: 2.5em;
   place-self: center;
-  color: #f00;
 }
 
+.play-btn{
+  color: rgb(33, 33, 159);
+}
+.pause-btn{
+  color: #000;
+}
 .restart-btn{
   color: #40885d;
 }

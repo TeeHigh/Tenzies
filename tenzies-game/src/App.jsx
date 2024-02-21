@@ -192,11 +192,11 @@ function App() {
           >
             {!isRunning ? 
               <FaRegPlayCircle
-                className='pause-btn bottom-btn'
+                className='play-btn bottom-btn'
               /> 
               : 
               <FaRegPauseCircle
-                className='play-btn bottom-btn'
+                className='pause-btn bottom-btn'
               /> 
             }
           </button>
