@@ -18,7 +18,7 @@ function CountUpTimer({isRunning, setSeconds, hours, minutes, remainingSeconds})
 
     return (
         <div>
-            <p>⏱: {`${hours.toString().padStart(2, "0")}:${minutes
+            <p title='timer'>⏱: {`${hours.toString().padStart(2, "0")}:${minutes
                 .toString()
                 .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`}</p>
             

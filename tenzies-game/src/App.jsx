@@ -18,6 +18,7 @@ function App() {
   const { width, height } = useWindowSize()
   const [rollCount, setRollCount] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [isHeld, setHeld] = useState(false)
 
   const allHeld = diceArr.every(element => element.isHeld);
   const firstValue = diceArr[0].value;
@@ -58,6 +59,7 @@ function App() {
     resetTimer()
     setRollCount(0)
     setIsPaused(false)
+    setHeld(false)
   }
 
   function rollDice() {
@@ -67,7 +69,6 @@ function App() {
           die.isHeld ? die : newDie()
         )))
         setRollCount(prevRollCount => prevRollCount + 1)
-        // setIsRunning(true)
       }
       else {
         resetGame()
@@ -81,11 +82,12 @@ function App() {
         die.id === id ? { ...die, isHeld: !die.isHeld } : die
       )))
       setIsRunning(true)
+      setHeld(true)
     }
   }
 
   function toggleTimer() {
-    if(rollCount){
+    if(rollCount || isHeld){
       setIsRunning(prevRunning => !prevRunning);
       setIsPaused(prevPaused => !prevPaused)
     }
@@ -141,12 +143,12 @@ function App() {
         <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
         <div className="stats">
           {/* Count number of times user has rolled the dice */}
-          <p className="roll-count">
+          <p className="roll-count" title='roll count'>
             No. of Rolls: {rollCount}
           </p>
 
           {/* Display user's best time */}
-          <p className="highscore-count">
+          <p className="highscore-count" title='best time'>
             🏆 : {`${bestHour.toString().padStart(2, "0")}:${bestMinute.toString().padStart(2, "0")}:${bestSecond.toString().padStart(2, "0")}`}
           </p>
 
@@ -176,6 +178,7 @@ function App() {
           }
         </div>
         <button
+          title='roll dice'
           className='roll-btn'
           onClick={() => rollDice()}
         >
@@ -183,6 +186,7 @@ function App() {
         </button>
         <div className="controls">
           <button
+            title='pause/play'
             className='toggle-timer'
             onClick={() => toggleTimer()}
           >
@@ -197,6 +201,7 @@ function App() {
             }
           </button>
           <button
+            title='restart'
             className='restart'
             onClick={
               () => resetGame()
