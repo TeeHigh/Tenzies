@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import './style.css'
 import Die from './Die'
-import CountUpTimer from './components/Counter'
+import CountUpTimer from './components/Timer'
+import 'nanoid'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
@@ -13,7 +14,6 @@ function App() {
   const [bestTime, setBestTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [isRunning, setIsRunning] = useState(false);
-  const [isStopped, setStopped] = useState(false)
   const { width, height } = useWindowSize()
   const [rollCount, setRollCount] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -48,7 +48,6 @@ function App() {
     for (let i = 0; i < 10; i++) {
       numberArr.push(newDie())
     }
-    console.log("New dice")
     return numberArr
   }
 
@@ -57,6 +56,7 @@ function App() {
     setDiceArr(allNewDice)
     resetTimer()
     setRollCount(0)
+    // setIsRunning(true)
     setIsPaused(false)
   }
 
@@ -67,6 +67,7 @@ function App() {
           die.isHeld ? die : newDie()
         )))
         setRollCount(prevRollCount => prevRollCount + 1)
+        // setIsRunning(true)
       }
       else {
         resetGame()
@@ -79,49 +80,47 @@ function App() {
       setDiceArr(prev => prev.map(die => (
         die.id === id ? { ...die, isHeld: !die.isHeld } : die
       )))
+      setIsRunning(true)
     }
   }
 
-  function startTimer() {
-    setIsRunning(true);
-  };
-
   function toggleTimer() {
-    setIsRunning(preRunning => !preRunning);
+    setIsRunning(prevRunning => !prevRunning);
     setIsPaused(prevPaused => !prevPaused)
   };
 
   function stopTimer(){
     setIsRunning(false)
-    setStopped(true)
   }
 
   function resetTimer() {
     setIsRunning(false);
     setSeconds(0);
-    setStopped(false)
   };
 
   useEffect(() => {
-    if (isStopped && (!bestTime || currentTime < bestTime)) {
-      setBestTime(currentTime);
-    }
-}, [isStopped, currentTime, bestTime]);
+    console.log(bestTime)
+  }, [isRunning])
 
   useEffect(() => {
     if (allHeld && allSame) {
       setTenzies(true)
-      stopTimer()
       setCurrentTime(seconds)
+
+      if(bestTime == 0){
+        setBestTime(currentTime)
+      }
+      else if (currentTime && currentTime < bestTime) {
+        setBestTime(currentTime)
+      }
+
+      stopTimer()
     }
     else {
       setTenzies(false)
-      setTimeout(startTimer(), 2000)
     }
 
-    console.log(tenzies)
-
-  }, [diceArr])
+  }, [diceArr, isRunning])
 
   return (
     <main>

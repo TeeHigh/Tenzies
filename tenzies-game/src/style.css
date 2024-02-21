@@ -27,6 +27,7 @@ main{
   rgba(255, 255, 255, 0.95)), url(./assets/Tenzies_logo-removebg-preview.png);
   background-position: center;
   background-size: contain;
+  /* background-repeat: no-repeat; */
 }
 
 .title{
@@ -40,14 +41,12 @@ main{
   text-align: center;
   color: #4A4E74;
   font-size: .9em;
-  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
   font-family: "Karla", sans-serif;
 }
 .stats{
   display: flex;
   width: 80%;
   justify-content: space-around;
-  /* gap: 5px; */
 }
 .die-container{
   width: 50%;
@@ -66,7 +65,6 @@ main{
   font-weight: bold;
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  /* border: 1px solid red; */
 }
 .is-held{
   background-color: #59E391;
@@ -115,9 +113,6 @@ main{
     width: 80%;
     justify-content: space-around;
     gap: .5em;
-  }
-  .highscore-count{
-    /* order: 3; */
   }
 }
 @media(max-width: 350px){
