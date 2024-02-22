@@ -140,7 +140,6 @@ main{
   .stats{
     display: flex;
     flex-wrap: wrap;
-    /* flex-direction: column; */
     width: 80%;
     justify-content: space-around;
     gap: .5em;
